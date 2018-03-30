@@ -1,10 +1,11 @@
 fun! s:source()
   " return system("kubectl config get-contexts | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k2\"}'")
-  return system("kubectl config get-contexts | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k2\"}'")
+  " return system("kubectl config get-contexts | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k2\"}'")
+  return system("oc config get-contexts | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k2\"}'")
 endf
 
 fun! s:help()
-  cal g:Help.reg("Kubernetes Contexts: kubectl config get-contexts",
+  cal g:Help.reg("Kubernetes Contexts: oc config get-contexts",
     \" D - Delete Context\n" .
     \" R - Rename Context\n" .
     \" s - Switch Context\n" 
@@ -29,7 +30,7 @@ fun! s:handleDeleteContext()
   let key = s:key(getline('.'))
   redraw | echomsg key
 
-  let out = system('kubectl config delete-context ' . shellescape(key))
+  let out = system('oc config delete-context ' . shellescape(key))
   redraw | echomsg split(out, "\n")[0]
   cal s:render()
 endf
@@ -38,7 +39,7 @@ fun! s:handleSwitchContext()
   let key = s:key(getline('.'))
   redraw | echomsg key
 
-  let out = system('kubectl config use-context ' . shellescape(key))
+  let out = system('oc config use-context ' . shellescape(key))
   redraw | echomsg split(out, "\n")[0]
   cal s:render()
 endf
@@ -50,7 +51,7 @@ fun! s:handleRenameContext()
   let newName = input('Context:', key)
   cal inputrestore()
 
-  let out = system('kubectl config rename-context ' . shellescape(key) . ' ' . shellescape(newName))
+  let out = system('oc config rename-context ' . shellescape(key) . ' ' . shellescape(newName))
   redraw | echomsg split(out, "\n")[0]
   cal s:render()
 endf
@@ -66,7 +67,7 @@ fun! s:render()
   set nomodifiable
 endf
 
-fun! s:VikubeContextList()
+fun! s:ViocpContextList()
   tabnew
   silent file KContextList
   setlocal noswapfile  
@@ -84,4 +85,4 @@ fun! s:VikubeContextList()
   syn match CurrentContext +^\*.*+
   hi link CurrentContext Identifier
 endf
-com! VikubeContextList :cal s:VikubeContextList()
+com! ViocpContextList :cal s:ViocpContextList()

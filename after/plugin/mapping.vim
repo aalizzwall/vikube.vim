@@ -1,20 +1,20 @@
 
-" VikubeContextList
-nmap <leader>kc  :VikubeContextList<CR>
+" ViocpContextList
+nmap <leader>kc  :ViocpContextList<CR>
 
-" VikubeNodeList
-nmap <leader>kno  :VikubeNodeList<CR>
+" ViocpNodeList
+nmap <leader>kno  :ViocpNodeList<CR>
 
-" VikubePodList
-nmap <leader>kpo  :VikubePodList<CR>
+" ViocpPodList
+nmap <leader>kpo  :ViocpPodList<CR>
 
-" VikubePVCList
-nmap <leader>kpvc  :VikubePVCList<CR>
+" ViocpPVCList
+nmap <leader>kpvc  :ViocpPVCList<CR>
 
-nmap <leader>kpv  :VikubePVList<CR>
+nmap <leader>kpv  :ViocpPVList<CR>
 
-" VikubeServiceList
-nmap <leader>ksvc :VikubeServiceList<CR>
+" ViocpServiceList
+nmap <leader>ksvc :ViocpServiceList<CR>
 
-" VikubeTop
-nmap <leader>kt  :VikubeTop<CR>
+" ViocpTop
+nmap <leader>kt  :ViocpTop<CR>

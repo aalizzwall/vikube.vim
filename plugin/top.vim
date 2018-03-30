@@ -1,5 +1,5 @@
 fun! s:source()
-  return system("kubectl top " . b:top_mode . " | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k1\"}'")
+  return system("ocp top " . b:top_mode . " | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k1\"}'")
 endf
 
 fun! s:help()
@@ -45,7 +45,7 @@ fun! s:handleDescribe()
 
   let top_mode = b:top_mode
 
-  let out = system('kubectl describe ' . top_mode . ' ' . key)
+  let out = system('oc describe ' . top_mode . ' ' . key)
   botright new
   silent exec "file " . key
   setlocal noswapfile nobuflisted nowrap cursorline nonumber fdc=0
@@ -83,7 +83,7 @@ fun! s:render()
   set nomodifiable
 endf
 
-fun! s:VikubeTop()
+fun! s:ViocpTop()
   tabnew
   let b:top_mode = "pods"
 
@@ -106,7 +106,7 @@ fun! s:VikubeTop()
   syn match Comment +^#.*+ 
 endf
 
-com! VikubeTop :cal s:VikubeTop()
+com! ViocpTop :cal s:ViocpTop()
 
 if exists("g:vikube_autoupdate")
   au! CursorHold KTopList :cal <SID>render()

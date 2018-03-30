@@ -89,7 +89,7 @@ fun! g:KubernetesResourceTypeCompletion(lead, cmd, pos)
 endf
 
 fun! g:KubernetesContexts()
-  let out = system("kubectl config get-contexts --no-headers | cut -d' ' -f2- | awk '{ print $1 }'")
+  let out = system("oc config get-contexts --no-headers | cut -d' ' -f2- | awk '{ print $1 }'")
   return split(out)
 endf
 
@@ -100,7 +100,7 @@ fun! g:KubernetesContextCompletion(lead, cmd, pos)
 endf
 
 fun! s:cmdbase()
-  let cmd = "kubectl"
+  let cmd = "oc"
   if len(b:context) > 0
     let cmd = cmd . " --context=" . b:context
   endif
@@ -626,7 +626,7 @@ fun! s:render()
 endf
 
 
-fun! s:Vikube(resource_type)
+fun! s:Viocp(resource_type)
   tabnew
   let t:search_inserting = 0
   let t:result_window_buf = bufnr('%')
@@ -650,11 +650,11 @@ fun! s:Vikube(resource_type)
   " default local bindings
   nnoremap <script><buffer> /     :cal <SID>handleStartSearch()<CR>
 
-  com! -buffer -range VikubeDeleteResource  :call <SID>handleDelete(<line1>, <line2>)
+  com! -buffer -range ViocpDeleteResource  :call <SID>handleDelete(<line1>, <line2>)
 
   " Modification Actions
-  nnoremap <script><buffer> D     :VikubeDeleteResource<CR>
-  vnoremap <script><buffer> D     :VikubeDeleteResource<CR>
+  nnoremap <script><buffer> D     :ViocpDeleteResource<CR>
+  vnoremap <script><buffer> D     :ViocpDeleteResource<CR>
 
   nnoremap <script><buffer> L     :cal <SID>handleLabel()<CR>
   nnoremap <script><buffer> S     :cal <SID>handleScale()<CR>
@@ -696,15 +696,15 @@ fun! s:Vikube(resource_type)
   hi Cursor term=reverse cterm=reverse ctermbg=darkcyan guifg=white guibg=darkcyan
 endf
 
-com! VikubeNodeList :cal s:Vikube("nodes")
-com! VikubePVList :cal s:Vikube("persistentvolumes")
-com! VikubePVCList :cal s:Vikube("persistentvolumeclaims")
-com! VikubeServiceList :cal s:Vikube("services")
-com! VikubeStatefulsetList :cal s:Vikube("statefulsets")
-com! VikubeDeploymentList :cal s:Vikube("deployments")
-com! VikubePodList :cal s:Vikube("pods")
-com! Vikube :cal s:Vikube("pods")
+com! ViocpNodeList :cal s:Viocp("nodes")
+com! ViocpPVList :cal s:Viocp("persistentvolumes")
+com! ViocpPVCList :cal s:Viocp("persistentvolumeclaims")
+com! ViocpServiceList :cal s:Viocp("services")
+com! ViocpStatefulsetList :cal s:Viocp("statefulsets")
+com! ViocpDeploymentList :cal s:Viocp("deployments")
+com! ViocpPodList :cal s:Viocp("pods")
+com! Viocp :cal s:Viocp("pods")
 
 if exists("g:vikube_autoupdate")
-  au! CursorHold VikubeExplorer :cal <SID>render()
+  au! CursorHold ViocpExplorer :cal <SID>render()
 endif
