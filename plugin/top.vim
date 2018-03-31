@@ -1,5 +1,5 @@
 fun! s:source()
-  return system("oc top " . b:top_mode . " | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k1\"}'")
+  return system("oc adm top " . b:top_mode . " | awk 'NR == 1; NR > 1 {print $0 | \"sort -b -k1\"}'")
 endf
 
 fun! s:help()
